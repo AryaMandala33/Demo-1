@@ -18,9 +18,27 @@ function addTodo() {
 function editTodo(button) {
     const li = button.parentElement;
     const taskText = li.querySelector('.task-text');
-    const newText = prompt('Edit your task:', taskText.textContent);
-    if (newText) {
-        taskText.textContent = newText;
+    
+    if (button.textContent === 'Edit') {
+        const input = document.createElement('input');
+        input.type = 'text';
+        input.value = taskText.textContent;
+        li.insertBefore(input, taskText);
+        li.removeChild(taskText);
+        button.textContent = 'Save';
+    } else {
+        const input = li.querySelector('input');
+        const newText = input.value.trim();
+        
+        if (newText) {
+            const span = document.createElement('span');
+            span.classList.add('task-text');
+            span.textContent = newText;
+            li.insertBefore(span, input);
+            li.removeChild(input);
+        }
+        
+        button.textContent = 'Edit';
     }
 }
 
